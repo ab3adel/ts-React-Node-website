@@ -1,0 +1,85 @@
+
+scalar GraphqlDate
+type product {
+    title:String!
+    description:String!
+    price:Int!
+    img:String
+    category:String!
+}
+
+input iproduct {
+    title:String!
+    description:String!
+    price:Int!
+    img:String
+    category:String!
+}
+type user {
+    userName:String!
+    role:String!
+    email:String!
+    lastOrder:GraphqlDate!
+    counter:Int!
+    googleID:Int
+    status:String
+}
+input iuser {
+  username:String
+  userEmail:String
+   userStatus:String
+}
+input imatter {
+    matterTitle:String!
+    matterPrice:Int
+}
+type userType {
+  username:String
+  userEmail:String
+   userStatus:String
+}
+type matter {
+    matterTitle:String!
+    matterPrice:Int
+}
+input iorder {
+    created:String
+    user:iuser
+    quantaty:Int 
+    matter:imatter
+    status:String
+
+}
+type order {
+    
+    created:String
+    user:userType
+    quantaty:Int 
+    matter:matter
+    status:String
+
+}
+type orderType{
+    _id:Int 
+    order:order
+}
+type result {
+    _id:order
+    total:Int
+}
+
+type Query {
+    allContent:[product]!
+  categoryContent(category:String):[product]
+  getUser(userName:String):user
+  countOrders:Int!
+  getOrders:[orderType]
+  userStatus(username:String):[result]
+}
+
+type Mutation{
+    insertUpdate(title:String!,description:String,price:Int!,img:String,category:String!) :String
+    deleteProduct(title:String!):String
+    order(order:iorder):String
+    orderDone(username:String):String
+}
